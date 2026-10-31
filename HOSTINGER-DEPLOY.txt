@@ -1,0 +1,33 @@
+Deploy na Hostinger (Node + MySQL)
+==================================
+
+1) Banco de dados (hPanel)
+   - Crie o banco MySQL e o utilizador; anote MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE.
+   - Host para aplicação NO MESMO servidor: normalmente MYSQL_HOST=localhost (não use o URL do phpMyAdmin no browser).
+   - Importe database.sql no phpMyAdmin (estrutura + utilizadores iniciais).
+   - Se já tinha base antiga: execute database-upgrade-mysql.sql uma vez.
+
+2) Variáveis de ambiente (.env na raiz do projeto Node)
+   MYSQL_HOST=localhost
+   MYSQL_PORT=3306
+   MYSQL_USER=...
+   MYSQL_PASSWORD=...
+   MYSQL_DATABASE=...
+   ADMIN_SECRET=sua_senha_painel
+
+   Teste a ligação na pasta do projeto:
+   npm install
+   npm run verify:mysql
+
+3) Arranque
+   npm start
+   (No painel Hostinger, configure o comando de arranque e a porta exposta.)
+
+4) Este pacote (lua-security-hostinger)
+   - Mesmo design e API que o projeto original.
+   - saveUsers no MySQL usa UPSERT (INSERT ... ON DUPLICATE KEY UPDATE) em vez de apagar
+     toda a tabela — evita bloqueios e erros 503 sob carga na Hostinger.
+
+5) phpMyAdmin
+   O endereço https://...hstgr.io no browser é só a interface web. MYSQL_HOST continua a ser
+   o hostname MySQL do hPanel (muitas vezes localhost para o Node no mesmo servidor).

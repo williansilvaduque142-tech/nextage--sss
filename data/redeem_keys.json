@@ -1,0 +1,18 @@
+{
+  "keys": [
+    {
+      "code": "MWPK-YMMN-JEB7",
+      "expiresInSeconds": 86400,
+      "createdAt": "2026-02-21T09:53:16.978Z",
+      "usedAt": "2026-02-21T10:10:47.010Z",
+      "usedBy": "00330-80000-00000-AA514"
+    },
+    {
+      "code": "D88D-00XS-6HMX",
+      "expiresInSeconds": 604800,
+      "createdAt": "2026-02-21T10:04:12.813Z",
+      "usedAt": null,
+      "usedBy": null
+    }
+  ]
+}

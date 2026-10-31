@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>revendedores</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+  <div class="container">
+    <div id="resellerLoginBox" class="login-screen">
+      <div class="login-sky" aria-hidden="true">
+        <span class="moon m1"></span><span class="moon m2"></span><span class="moon m3"></span>
+      </div>
+      <div class="card-login">
+        <div class="login-header">
+          <span class="login-kicker">LUA SECURITY</span>
+          <span class="login-subkicker">REVENDEDORES</span>
+        </div>
+        <h2 class="login-title">Acesso do vendedor</h2>
+        <p class="login-desc">Credenciais criadas no painel admin. Administradores não entram aqui.</p>
+        <div class="login-form">
+          <label class="login-label" for="resellerLoginUser">USUÁRIO</label>
+          <input type="text" id="resellerLoginUser" placeholder="Usuário" autocomplete="username" class="login-input">
+          <label class="login-label" for="resellerLoginPassword">SENHA</label>
+          <input type="password" id="resellerLoginPassword" placeholder="Senha" autocomplete="current-password" class="login-input">
+          <label class="checkbox-label login-remember">
+            <input type="checkbox" id="resellerRememberLogin">
+            <span class="checkbox-box"></span>
+            <span class="checkbox-text">Lembrar senha</span>
+          </label>
+          <button type="button" id="btnResellerLogin" class="login-submit">Entrar</button>
+          <p id="resellerLoginError" class="error login-error"></p>
+        </div>
+        <div class="login-footer">DIREITOS RESERVADO PARA LUA CORP</div>
+      </div>
+    </div>
+
+    <div id="resellerResetPasswordModal" class="reseller-modal-backdrop hidden" aria-hidden="true" role="dialog" aria-labelledby="resellerResetPasswordModalTitle">
+      <div class="reseller-modal" role="document">
+        <div class="reseller-modal-head">
+          <h2 id="resellerResetPasswordModalTitle" class="reseller-modal-title">Nova senha</h2>
+          <button type="button" class="reseller-modal-close" id="btnResellerResetClose" aria-label="Fechar">×</button>
+        </div>
+        <div class="reseller-modal-body">
+          <p class="reseller-modal-desc">Defina uma nova senha para o painel de revendedor.</p>
+          <label class="login-label" for="resellerResetNew">Nova senha</label>
+          <input type="password" id="resellerResetNew" class="full-width login-input" placeholder="Mínimo 4 caracteres" autocomplete="new-password">
+          <label class="login-label" for="resellerResetConfirm" style="margin-top:0.5rem">Confirmar</label>
+          <input type="password" id="resellerResetConfirm" class="full-width login-input" placeholder="Repita a senha" autocomplete="new-password">
+          <p id="resellerResetError" class="error login-error" style="margin-top:0.75rem"></p>
+          <div class="add-row" style="margin-top:0.75rem">
+            <button type="button" id="btnResellerResetSubmit" class="login-submit">Guardar nova senha</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="resellerPhraseModal" class="admin-phrase-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="resellerPhraseModalTitle">
+      <div class="admin-phrase-modal-backdrop" aria-hidden="true"></div>
+      <div class="card-login admin-phrase-modal-card">
+        <h2 id="resellerPhraseModalTitle" class="login-title" style="font-size:1.15rem;margin-bottom:0.35rem">Palavra-chave de segurança</h2>
+        <p class="login-desc" style="margin-bottom:1rem">Esta conta exige a palavra-chave definida no <strong>perfil</strong>. Se usou &quot;Lembrar senha&quot;, ela pode estar guardada automaticamente.</p>
+        <div class="login-form">
+          <label class="login-label" for="resellerModalSecretPhrase">PALAVRA-CHAVE (se já definiu no perfil)</label>
+          <input type="password" id="resellerModalSecretPhrase" placeholder="Opcional até definir no perfil" autocomplete="off" class="login-input">
+          <button type="button" id="btnResellerModalPhraseConfirm" class="login-submit">Confirmar</button>
+          <button type="button" id="btnResellerModalPhraseCancel" class="btn-secondary full-width" style="margin-top:0.5rem">Cancelar</button>
+          <p id="resellerModalPhraseError" class="error login-error"></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="resellerPanel" class="hidden">
+      <div class="app-shell">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="brand-mark">☾</div>
+            <div class="brand-text">
+              <span class="brand-title">Lua Corporation</span>
+              <span class="brand-subtitle">Revendedores</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section-title">Saldo</div>
+          <div class="sidebar-meta reseller-balance-box">
+            <span class="reseller-balance-label">Disponível</span>
+            <span id="resellerBalanceDisplay" class="reseller-balance-value">R$ 0,00</span>
+          </div>
+
+          <div class="reseller-sidebar-pix">
+            <button type="button" id="btnSidebarPix" class="btn-secondary full-width">Recarga PIX</button>
+          </div>
+
+          <div class="sidebar-section-title">Menu</div>
+          <nav class="tabs sidebar-nav reseller-sidebar-nav" aria-label="Menu revendedor">
+            <button type="button" class="tab active" data-tab="rcontas" data-title="Contas Loader" data-subtitle="Logins criados com suas keys">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 7a4 4 0 1 0 2.3 7.3L21 19v2h-2v-2h-2v-2h-2.7l-1.5-1.5A4 4 0 0 0 14 7z"/>
+                </svg>
+              </span> Contas Loader
+            </button>
+            <button type="button" class="tab" data-tab="rgerar" data-title="Gerar Key" data-subtitle="Gerar keys com seu saldo">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14"/>
+                  <path d="M5 12h14"/>
+                </svg>
+              </span> Gerar Key
+            </button>
+            <button type="button" class="tab" data-tab="rkeys" data-title="Keys Geradas" data-subtitle="Histórico dos seus códigos">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/>
+                </svg>
+              </span> Keys Geradas
+            </button>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <header class="topbar">
+            <div class="topbar-left">
+              <span id="resellerTopbarTitle" class="topbar-title">Contas Loader</span>
+              <span id="resellerTopbarSubtitle" class="topbar-subtitle">Logins criados com suas keys</span>
+            </div>
+            <div class="topbar-right reseller-topbar-profile">
+              <input type="file" id="resellerAvatarFile" accept="image/jpeg,image/png,image/gif,image/webp" class="reseller-avatar-file-input" tabindex="-1" aria-hidden="true">
+              <button type="button" class="reseller-profile-text reseller-profile-text-btn" id="btnResellerProfileText" aria-haspopup="dialog" aria-expanded="false" aria-controls="resellerProfileDropdown">
+                <span id="resellerTopbarUser" class="reseller-topbar-username" aria-live="polite"></span>
+              </button>
+              <div class="reseller-profile-wrap">
+                <button type="button" id="btnResellerAvatarPick" class="reseller-avatar-btn" title="Perfil e foto do vendedor" aria-label="Abrir menu do perfil" aria-haspopup="dialog" aria-expanded="false" aria-controls="resellerProfileDropdown">
+                  <img id="resellerAvatarImg" alt="" class="reseller-avatar-img hidden" width="40" height="40" decoding="async">
+                  <span id="resellerAvatarInitial" class="reseller-avatar-initial" aria-hidden="true">?</span>
+                </button>
+                <div id="resellerProfileDropdown" class="reseller-profile-dropdown hidden" role="menu" aria-label="Opções da conta">
+                  <div class="reseller-profile-menu-title">Conta</div>
+                  <button type="button" class="reseller-profile-menu-item" role="menuitem" data-open-modal="perfil">Perfil</button>
+                  <button type="button" class="reseller-profile-menu-item" role="menuitem" data-open-modal="vendas">Status de vendas</button>
+                  <button type="button" class="reseller-profile-menu-item" role="menuitem" data-open-modal="ranking">Ranking</button>
+                  <button type="button" id="btnResellerLogout" class="reseller-profile-menu-item reseller-profile-menu-logout" role="menuitem">Sair</button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="main-content">
+            <div id="resellerMpWarning" class="storage-warning hidden" role="alert">
+              Configure <strong>MERCADOPAGO_ACCESS_TOKEN</strong> no servidor e um e-mail em <strong>MERCADOPAGO_PAYER_EMAIL</strong> para gerar QR Code PIX.
+            </div>
+
+            <!-- Recarga PIX (aba modal ou painel interno) -->
+            <div id="tabRpix" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true">💠</span> Recarregar saldo (PIX)</h2>
+                <p class="card-desc">Gere o QR Code e pague; depois clique em atualizar para creditar.</p>
+                <div class="duration-row">
+                  <label class="duration-label" for="resellerTopupAmount">Valor (R$)</label>
+                  <input type="number" id="resellerTopupAmount" class="full-width" min="1" step="0.01" placeholder="Ex: 50">
+                </div>
+                <div class="add-row">
+                  <button type="button" id="btnResellerTopup">Gerar QR Code PIX</button>
+                </div>
+                <p id="resellerTopupMessage" class="message"></p>
+                <div id="resellerQrSection" class="hidden reseller-qr-wrap">
+                  <p class="card-desc">Pague com o app do banco ou copie o código PIX.</p>
+                  <div class="reseller-qr-inner">
+                    <img id="resellerQrImg" alt="QR Code PIX" class="reseller-qr-img hidden">
+                    <div id="resellerQrCodeText" class="reseller-pix-copy"></div>
+                  </div>
+                  <div class="add-row">
+                    <button type="button" id="btnResellerPollPayment" class="btn-secondary">Já paguei — atualizar saldo</button>
+                  </div>
+                  <p class="card-desc small-muted">ID do pagamento: <span id="resellerPaymentId"></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div id="tabRcontas" class="tab-pane active">
+              <div class="card reseller-dash-card">
+                <div class="reseller-dash-head">
+                  <h2><span class="card-icon" aria-hidden="true">🔐</span> Contas loader (seus clientes)</h2>
+                  <button type="button" id="btnRefreshMyLoaders" class="btn-secondary btn-reseller-refresh">Atualizar</button>
+                </div>
+                <p class="card-desc">Pessoas que <strong>registraram no loader</strong> usando uma key <strong>gerada por você</strong>. Online/offline, HWID e validade. Use a busca para filtrar.</p>
+                <div class="verify-row">
+                  <input type="text" id="resellerLoaderSearch" placeholder="Buscar usuário..." class="full-width" autocomplete="off">
+                </div>
+                <div id="resellerMyLoadersList" class="keys-list reseller-loaders-list"></div>
+              </div>
+            </div>
+
+            <div id="tabRgerar" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true">🔑</span> Gerar key de ativação</h2>
+                <p class="card-desc">O valor é descontado do saldo. Preços: 1 dia R$ 5,00 · 7 dias R$ 17,50 · 15 dias R$ 22,50 · 30 dias R$ 30,00.</p>
+                <div id="resellerPlansGrid" class="reseller-plans-grid"></div>
+                <p id="resellerGenMessage" class="message"></p>
+                <div id="resellerLastCode" class="reseller-last-code hidden"></div>
+              </div>
+            </div>
+
+            <div id="tabRkeys" class="tab-pane">
+              <div class="card reseller-dash-card">
+                <div class="reseller-dash-head">
+                  <h2><span class="card-icon" aria-hidden="true">📋</span> Keys geradas</h2>
+                  <button type="button" id="btnRefreshMyKeys" class="btn-secondary btn-reseller-refresh">Atualizar</button>
+                </div>
+                <p class="card-desc">Todos os códigos que você criou e se já foram resgatados.</p>
+                <div id="resellerMyKeysList" class="keys-list reseller-keys-list"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <div id="resellerModalPerfil" class="reseller-modal-backdrop hidden" aria-hidden="true">
+          <div class="reseller-modal" role="dialog" aria-modal="true" aria-labelledby="resellerModalPerfilTitle">
+            <div class="reseller-modal-head">
+              <h2 id="resellerModalPerfilTitle" class="reseller-modal-title">Perfil</h2>
+              <button type="button" class="reseller-modal-close" aria-label="Fechar">×</button>
+            </div>
+            <div class="reseller-modal-body">
+              <dl class="reseller-profile-stats">
+                <div class="reseller-profile-stat-row"><dt>Usuário</dt><dd id="resellerDropUser">—</dd></div>
+                <div class="reseller-profile-stat-row"><dt>Membro desde</dt><dd id="resellerDropCreated">—</dd></div>
+                <div class="reseller-profile-stat-row"><dt>Saldo atual</dt><dd id="resellerDropBalance">—</dd></div>
+              </dl>
+              <p id="resellerPhraseHint" class="reseller-modal-desc" style="margin-top:0.75rem"></p>
+              <h3 class="reseller-profile-subtitle" style="margin:1rem 0 0.5rem;font-size:0.95rem">Palavra-chave de segurança</h3>
+              <p class="reseller-modal-desc">Depois de definir, o login exige esta palavra além da senha.</p>
+              <div class="duration-row">
+                <input type="password" id="resellerPhraseNew" placeholder="Nova palavra-chave (mín. 4 caracteres)" class="full-width" autocomplete="new-password">
+                <input type="password" id="resellerPhraseConfirm" placeholder="Confirmar" class="full-width" autocomplete="new-password">
+              </div>
+              <div class="add-row" style="margin-top:0.5rem">
+                <button type="button" id="btnSaveResellerPhrase">Guardar palavra-chave</button>
+                <button type="button" id="btnClearResellerPhrase" class="btn-secondary">Remover palavra-chave</button>
+              </div>
+              <button type="button" id="btnResellerChangePhoto" class="btn-secondary full-width reseller-profile-photo-btn" style="margin-top:1rem">Alterar foto</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="resellerModalVendas" class="reseller-modal-backdrop hidden" aria-hidden="true">
+          <div class="reseller-modal" role="dialog" aria-modal="true" aria-labelledby="resellerModalVendasTitle">
+            <div class="reseller-modal-head">
+              <h2 id="resellerModalVendasTitle" class="reseller-modal-title">Status de vendas</h2>
+              <button type="button" class="reseller-modal-close" aria-label="Fechar">×</button>
+            </div>
+            <div class="reseller-modal-body">
+              <p class="reseller-modal-desc">Desempenho com base nas suas keys geradas.</p>
+              <dl class="reseller-profile-stats">
+                <div class="reseller-profile-stat-row"><dt>Volume em keys</dt><dd id="resellerDropVolume">—</dd></div>
+                <div class="reseller-profile-stat-row"><dt>Keys geradas</dt><dd id="resellerDropKeys">—</dd></div>
+                <div class="reseller-profile-stat-row"><dt>Clientes (loaders)</dt><dd id="resellerDropClients">—</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div id="resellerModalRanking" class="reseller-modal-backdrop hidden" aria-hidden="true">
+          <div class="reseller-modal reseller-modal-wide reseller-modal-ranking" role="dialog" aria-modal="true" aria-labelledby="resellerModalRankingTitle">
+            <div class="reseller-modal-head">
+              <h2 id="resellerModalRankingTitle" class="reseller-modal-title">Ranking</h2>
+              <div class="reseller-modal-head-actions">
+                <button type="button" id="btnResellerRankingRefresh" class="btn-secondary btn-reseller-lb-refresh">Atualizar</button>
+                <button type="button" class="reseller-modal-close" aria-label="Fechar">×</button>
+              </div>
+            </div>
+            <div class="reseller-modal-body">
+              <p id="resellerRankingStatus" class="reseller-ranking-status" role="status"></p>
+              <div id="resellerRankingChartWrap" class="reseller-lb-chart-wrap hidden">
+                <canvas id="resellerRankingChart" aria-label="Ranking de vendedores por volume"></canvas>
+                <div id="resellerRankingAvatarLayer" class="reseller-ranking-avatar-layer" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+  <script src="revendedor.obf.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "lua-security-hostinger",
+  "version": "1.0.0",
+  "description": "Painel para liberar/remover IDs vinculado ao sistema de auth (keys.json)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:client": "node scripts/build-client.js",
+    "build": "npm run build:client",
+    "verify:mysql": "node scripts/verify-mysql.js"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.1"
+  },
+  "dependencies": {
+    "@aws-sdk/rds-signer": "^3.0.0",
+    "@vercel/blob": "^2.0.0",
+    "@vercel/functions": "^3.0.0",
+    "better-sqlite3": "^11.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5",
+    "nodemailer": "^8.0.5",
+    "pg": "^8.11.3"
+  }
+}

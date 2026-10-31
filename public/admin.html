@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>administradores</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+  <div class="container">
+    <div id="loginBox" class="login-screen">
+      <div class="login-sky" aria-hidden="true">
+        <span class="moon m1"></span>
+        <span class="moon m2"></span>
+        <span class="moon m3"></span>
+        <span class="moon m4"></span>
+        <span class="moon m5"></span>
+        <span class="moon m6"></span>
+        <span class="moon m7"></span>
+        <span class="moon m8"></span>
+        <span class="moon m9"></span>
+        <span class="moon m10"></span>
+        <span class="moon m11"></span>
+        <span class="moon m12"></span>
+        <span class="moon m13"></span>
+        <span class="moon m14"></span>
+        <span class="moon m15"></span>
+        <span class="moon m16"></span>
+        <span class="moon m17"></span>
+        <span class="moon m18"></span>
+        <span class="moon m19"></span>
+        <span class="moon m20"></span>
+        <span class="moon m21"></span>
+        <span class="moon m22"></span>
+        <span class="moon m23"></span>
+        <span class="moon m24"></span>
+        <span class="moon m25"></span>
+        <span class="moon m26"></span>
+        <span class="moon m27"></span>
+        <span class="moon m28"></span>
+        <span class="moon m29"></span>
+        <span class="moon m30"></span>
+        <span class="moon m31"></span>
+        <span class="moon m32"></span>
+        <span class="moon m33"></span>
+        <span class="moon m34"></span>
+        <span class="moon m35"></span>
+        <span class="moon m36"></span>
+        <span class="moon m37"></span>
+        <span class="moon m38"></span>
+        <span class="moon m39"></span>
+        <span class="moon m40"></span>
+        <span class="moon m41"></span>
+        <span class="moon m42"></span>
+        <span class="moon m43"></span>
+        <span class="moon m44"></span>
+        <span class="moon m45"></span>
+        <span class="moon m46"></span>
+        <span class="moon m47"></span>
+        <span class="moon m48"></span>
+        <span class="moon m49"></span>
+        <span class="moon m50"></span>
+      </div>
+      <div class="card-login">
+        <div class="login-header">
+          <span class="login-kicker">LUA SECURITY</span>
+          <span class="login-subkicker">SECURITY SYSTEM</span>
+        </div>
+        <h2 class="login-title">Acesso do administrador</h2>
+        <p class="login-desc">Entrada exclusiva para administradores. Vendedores usam outro endereço.</p>
+        <div class="login-form">
+          <label class="login-label" for="loginUser">USUÁRIO</label>
+          <input type="text" id="loginUser" placeholder="Usuário" autocomplete="off" class="login-input">
+          <label class="login-label" for="loginPassword">SENHA</label>
+          <input type="password" id="loginPassword" placeholder="Senha" autocomplete="off" class="login-input">
+          <label class="checkbox-label login-remember">
+            <input type="checkbox" id="rememberLogin">
+            <span class="checkbox-box"></span>
+            <span class="checkbox-text">Lembrar senha</span>
+          </label>
+          <button type="button" id="btnLogin" class="login-submit">Entrar</button>
+          <button type="button" id="btnCheckDb" class="btn-secondary full-width" style="margin-top:0.65rem">Verificar banco de dados</button>
+          <p id="loginDbStatus" class="login-db-status" aria-live="polite"></p>
+          <p id="loginError" class="error login-error"></p>
+        </div>
+        <div class="login-footer">DIREITOS RESERVADO PARA LUA CORP</div>
+      </div>
+    </div>
+
+    <div id="adminPhraseModal" class="admin-phrase-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="adminPhraseModalTitle">
+      <div class="admin-phrase-modal-backdrop" aria-hidden="true"></div>
+      <div class="card-login admin-phrase-modal-card">
+        <h2 id="adminPhraseModalTitle" class="login-title" style="font-size:1.15rem;margin-bottom:0.35rem">Palavra-chave de segurança</h2>
+        <p class="login-desc" style="margin-bottom:1rem">Esta conta exige a palavra-chave definida na aba <strong>Logins</strong>. Se usou &quot;Lembrar senha&quot;, ela pode estar guardada automaticamente.</p>
+        <div class="login-form">
+          <label class="login-label" for="adminModalSecretPhrase">PALAVRA-CHAVE (se já definiu no perfil)</label>
+          <input type="password" id="adminModalSecretPhrase" placeholder="Opcional até definir no perfil" autocomplete="off" class="login-input">
+          <button type="button" id="btnAdminModalPhraseConfirm" class="login-submit">Confirmar</button>
+          <button type="button" id="btnAdminModalPhraseCancel" class="btn-secondary full-width" style="margin-top:0.5rem">Cancelar</button>
+          <p id="adminModalPhraseError" class="error login-error"></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel" class="hidden">
+      <div class="app-shell">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="brand-mark">☾</div>
+            <div class="brand-text">
+              <span class="brand-title">Lua Corporation</span>
+              <span class="brand-subtitle">Dashboard</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section-title">Menu</div>
+          <nav class="tabs sidebar-nav" aria-label="Menu principal">
+            <button type="button" class="tab active" data-tab="visao" data-title="Visão Geral" data-subtitle="Resumo do painel e ações rápidas">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 10.5L12 3l9 7.5"/>
+                  <path d="M5 10v11h14V10"/>
+                  <path d="M9 21v-6h6v6"/>
+                </svg>
+              </span> Visão Geral
+            </button>
+            <button type="button" class="tab" data-tab="loader" data-title="Contas Loader" data-subtitle="Crie e gerencie logins do loader">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 7a4 4 0 1 0 2.3 7.3L21 19v2h-2v-2h-2v-2h-2.7l-1.5-1.5A4 4 0 0 0 14 7z"/>
+                </svg>
+              </span> Contas Loader
+            </button>
+            <button type="button" class="tab" data-tab="usuariosloader" data-title="Usuários Loader" data-subtitle="Buscar, resetar HWID e remover">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M4 20a8 8 0 0 1 16 0"/>
+                </svg>
+              </span> Usuários Loader
+            </button>
+            <button type="button" class="tab" data-tab="gerarkey" data-title="Gerar Key" data-subtitle="Crie códigos para ativação no Discord">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5v14"/>
+                  <path d="M5 12h14"/>
+                </svg>
+              </span> Gerar Key
+            </button>
+            <button type="button" class="tab" data-tab="keysgeradas" data-title="Keys Geradas" data-subtitle="Lista de códigos criados">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/>
+                </svg>
+              </span> Keys Geradas
+            </button>
+            <button type="button" class="tab" data-tab="dll" data-title="DLL" data-subtitle="Hospedagem de DLLs fixas">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                </svg>
+              </span> DLL
+            </button>
+            <button type="button" class="tab" data-tab="usuarios" data-title="Usuários" data-subtitle="Acesso ao painel">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M4 20a8 8 0 0 1 16 0"/>
+                </svg>
+              </span> Usuários
+            </button>
+            <button type="button" class="tab" data-tab="revendedores" data-title="Revendedores" data-subtitle="Logins, saldo e link do painel">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </span> Revendedores
+            </button>
+            <button type="button" class="tab" data-tab="renovacao" data-title="Renova&#231;&#227;o" data-subtitle="Renove keys pr&#243;ximas do vencimento">
+              <span class="tab-icon" aria-hidden="true">
+                <svg class="tab-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4v6h6"/>
+                  <path d="M20 20v-6h-6"/>
+                  <path d="M20 10a8 8 0 0 0-14-5"/>
+                  <path d="M4 14a8 8 0 0 0 14 5"/>
+                </svg>
+              </span> Renova&#231;&#227;o
+            </button>
+          </nav>
+
+          <div class="sidebar-divider"></div>
+
+          <div class="sidebar-meta">
+            <span id="serverIdDisplay" class="server-id-display hidden" title="Se mudar ao recarregar, há mais de uma instância do servidor (usuários/keys podem sumir)."></span>
+          </div>
+
+          <div class="sidebar-footer">
+            <div class="user-card">
+              <div class="user-avatar">☾</div>
+              <div class="user-info">
+                <span class="user-label">Acesso</span>
+                <span id="currentUserLabel" class="current-user-label" aria-live="polite"></span>
+                <span class="status-online user-status"><span class="status-dot"></span> Online</span>
+              </div>
+            </div>
+            <button type="button" id="btnLogout" class="logout">Sair</button>
+          </div>
+        </aside>
+
+        <main class="main">
+          <header class="topbar">
+            <div class="topbar-left">
+              <span id="topbarTitle" class="topbar-title">Visão Geral</span>
+              <span id="topbarSubtitle" class="topbar-subtitle">Resumo do painel</span>
+            </div>
+            <div class="topbar-right">
+            </div>
+          </header>
+
+          <div class="main-content">
+            <div id="storageWarning" class="storage-warning hidden" role="alert">
+              ⚠️ Dados em memória — keys e IDs podem sumir. Na Vercel: vá em <strong>Settings → Environment Variables</strong> e adicione <strong>DATABASE_URL</strong> (Postgres/Neon) ou <strong>MYSQL_HOST</strong>, <strong>MYSQL_USER</strong>, <strong>MYSQL_PASSWORD</strong>, <strong>MYSQL_DATABASE</strong> (MySQL acessível pela internet). Depois faça redeploy.
+            </div>
+            <div id="storageDbError" class="storage-warning hidden" role="alert">
+              Banco de dados não conectado. Verifique MYSQL_* / DATABASE_URL e se o servidor alcança o banco.
+            </div>
+            <div id="storageSuccess" class="storage-success hidden" role="status">
+              ✓ SQL conectado — dados salvos no banco (keys e IDs não vão sumir).
+            </div>
+            <div id="storageSqliteWarning" class="storage-sqlite-warning hidden" role="alert">
+              <strong>SQLite:</strong> (1) Rode apenas <strong>uma</strong> instância (<code>node server.js</code>). (2) Com <strong>inatividade</strong> (site fechado, sem abas abertas), o servidor pode reiniciar em ambiente novo e o banco é perdido — os dados somem. Para que <strong>nada seja excluído</strong> ao fechar o site: use <strong>Postgres</strong> ou <strong>MySQL</strong> no .env (Neon, Vercel Postgres, etc.).
+            </div>
+
+            <div id="tabVisao" class="tab-pane active">
+              <section class="overview-hero">
+                <div class="overview-text">
+                  <span class="overview-kicker">Visão Geral</span>
+                  <h2 class="overview-title">Olá, seu painel está pronto</h2>
+                  <p class="overview-subtitle">Gerencie contas, chaves e DLLs em um só lugar. Contas loader: login + senha + HWID.</p>
+                  <div class="overview-actions">
+                    <button type="button" class="btn-secondary" data-jump="gerarkey">Gerar key</button>
+                    <button type="button" class="btn-ghost" data-jump="loader">Criar conta loader</button>
+                  </div>
+                </div>
+                <div class="overview-metrics">
+                  <div class="metric-card">
+                    <span class="metric-label">Contas loader</span>
+                    <span class="metric-value" data-stat="loader-count">0</span>
+                  </div>
+                  <div class="metric-card">
+                    <span class="metric-label">Keys geradas</span>
+                    <span class="metric-value" data-stat="redeem-count">0</span>
+                  </div>
+                  <div class="metric-card">
+                    <span class="metric-label">Usuários do painel</span>
+                    <span class="metric-value" data-stat="users-count">0</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="overview-grid">
+                <div class="stat-card">
+                  <div class="stat-icon">⚡︎</div>
+                  <div>
+                    <div class="stat-title">Fluxo rápido</div>
+                    <div class="stat-meta">Crie logins e gere keys sem sair do painel.</div>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon" aria-hidden="true">
+                    <svg class="stat-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="stat-title">DLLs fixas</div>
+                    <div class="stat-meta">Hospede versões estáveis com links permanentes.</div>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon">🔒︎</div>
+                  <div>
+                    <div class="stat-title">Segurança</div>
+                    <div class="stat-meta">Controle de HWID e acesso ao painel.</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="overview-split">
+                <div class="card quick-actions">
+                  <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></span> Atalhos rápidos</h2>
+                  <div class="quick-list">
+                    <button type="button" class="quick-item" data-jump="gerarkey">
+                      Gerar key agora
+                      <span>→</span>
+                    </button>
+                    <button type="button" class="quick-item" data-jump="loader">
+                      Criar conta loader
+                      <span>→</span>
+                    </button>
+                    <button type="button" class="quick-item" data-jump="dll">
+                      Enviar nova DLL
+                      <span>→</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="card activity-card">
+                  <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span> Atividade recente</h2>
+                  <div id="activityList" class="activity-list">
+                    <div class="activity-item">
+                      <span class="activity-dot"></span>
+                      <div>
+                        <strong>Nenhuma atividade recente</strong>
+                        <p class="activity-time">Assim que ocorrerem ações, elas aparecerão aqui.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div id="tabLoader" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="3.5"/><path d="M10.5 15.5h10l2-2v-2l-2-2h-3v-2h-2"/></svg></span> Criar login (loader)</h2>
+                <p class="card-desc">Crie contas para as pessoas logarem no loader (usuário + senha). No primeiro login o HWID do PC será registrado. Marque <strong>Sem verificação HWID</strong> para permitir login em qualquer PC.</p>
+                <div class="duration-row">
+                  <input type="text" id="loaderUsername" placeholder="Usuário" class="full-width">
+                  <input type="password" id="loaderPassword" placeholder="Senha" class="full-width">
+                </div>
+                <div class="duration-row">
+                  <label class="duration-label">Duração (dias)</label>
+                  <select id="loaderExpiresDays">
+                    <option value="0">Permanente</option>
+                    <option value="1">1 dia</option>
+                    <option value="7">7 dias</option>
+                    <option value="15">15 dias</option>
+                    <option value="30">30 dias</option>
+                    <option value="90">90 dias</option>
+                  </select>
+                </div>
+                <div class="duration-row">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="loaderSkipHwid" checked>
+                    <span class="checkbox-box" aria-hidden="true"></span>
+                    <span class="checkbox-text">Sem verificação de HWID (login em qualquer PC)</span>
+                  </label>
+                </div>
+                <div class="add-row">
+                  <button type="button" id="btnAddLoaderAccount">Criar login</button>
+                </div>
+                <p id="loaderMessage" class="message"></p>
+              </div>
+            </div>
+
+            <div id="tabUsuariosloader" class="tab-pane">
+              <div class="card">
+                <div class="card-header-row">
+                  <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M16.2 7.8l-2.9 6.4-6.4 2.9 2.9-6.4 6.4-2.9z"/></svg></span> Buscar por usuário (loader)</h2>
+                  <div id="loaderOnlineBadge" class="online-count-badge" aria-live="polite">
+                    <img src="user-icon.svg" alt="" class="online-count-icon">
+                    <span id="loaderOnlineCountValue" class="online-count-number">0</span>
+                    <span id="loaderOnlineCountLabel" class="online-count-label">jogadores online</span>
+                  </div>
+                </div>
+                <p class="card-desc">Busque uma conta do loader por usuário. Ao encontrar, você pode resetar HWID ou remover.</p>
+                <div class="verify-row">
+                  <input type="text" id="buscarUsuarioInput" placeholder="Usuário (buscar)" class="full-width">
+                  <button type="button" id="btnBuscarUsuario" class="btn-verificar">Buscar</button>
+                </div>
+                
+                                <div class="users-list-header">
+                  <h3 class="users-list-title">Usu&#225;rios ativos (loader)</h3>
+                  <button type="button" id="btnPauseAllLoader" class="btn-pause-key">Pausar todos</button>
+                </div>
+                <div id="loaderAccountsListUsuarios" class="keys-list"></div>
+              </div>
+            </div>
+
+            <div id="tabGerarkey" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></span> Gerar keys</h2>
+                <p class="card-desc">Escolha a duração e a quantidade.</code></p>
+                <div class="duration-row">
+                  <label class="duration-label">Duração da key</label>
+                  <select id="redeemDurationSelect">
+                    <option value="10">10 segundos</option>
+                    <option value="3600">1 hora</option>
+                    <option value="86400">1 dia</option>
+                    <option value="604800">7 dias</option>
+                    <option value="1296000">15 dias</option>
+                    <option value="2592000">30 dias</option>
+                    <option value="0">Permanente</option>
+                  </select>
+                </div>
+                <div class="duration-row">
+                  <label class="duration-label">Quantidade</label>
+                  <input type="number" id="redeemCount" min="1" max="100" value="1" class="redeem-count-input">
+                </div>
+                <div class="add-row">
+                  <button type="button" id="btnGenerateRedeemKeys">Gerar keys</button>
+                </div>
+                <p id="redeemKeysMessage" class="message"></p>
+                <div id="redeemKeysResult" class="redeem-keys-result hidden">
+                  <label class="duration-label">Códigos gerados (envie para a pessoa):</label>
+                  <div id="redeemKeysCodes" class="redeem-codes-list"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tabKeysgeradas" class="tab-pane">
+              <div class="card keys-card">
+                <div class="keys-card-header">
+                <div class="keys-card-title-row">
+                  <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/></svg></span> Keys geradas</h2>
+                </div>
+                <p class="card-desc">Lista de todos os códigos gerados no painel admin e pelos <strong>revendedores</strong> (mesma base).</p>
+                </div>
+                <div class="verify-row">
+                  <input type="text" id="buscarRedeemInput" placeholder="Código ou usuário (buscar)" class="full-width">
+                  <button type="button" id="btnBuscarRedeem" class="btn-verificar">Buscar</button>
+                </div>
+                                <div class="keys-filter-header">
+                  <div class="filter-row">
+                    <label class="duration-label" for="redeemStatusFilter">Filtro</label>
+                    <select id="redeemStatusFilter" class="status-filter-select">
+                      <option value="all">Todas</option>
+                      <option value="available">Dispon&#237;veis</option>
+                      <option value="activated">Ativadas</option>
+                      <option value="expired">Expiradas</option>
+                      <option value="reseller">S&#243; revendedores</option>
+                    </select>
+                  </div>
+                  <div class="filter-actions">
+                    <button type="button" id="btnPauseKeys" class="btn-pause-key">Pausar keys</button>
+                  </div>
+                </div>
+                <div id="redeemKeysList" class="keys-list"></div>
+              </div>
+            </div>
+
+            <div id="tabDll" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar DLL (Principal — SilvaCheats)</h2>
+                <p class="card-desc">Envie sua DLL para gerar um link fixo. Mesmo trocando o arquivo depois, o link de download permanece o mesmo — use no seu injector. Com <strong>Postgres/Prisma</strong>, DLLs maiores que ~3 MB são enviadas em partes automaticamente.</p>
+                <div class="dll-upload-row">
+                  <input type="file" id="dllFileInput" accept=".dll" class="dll-file-input">
+                  <button type="button" id="btnUploadDll">Enviar DLL</button>
+                </div>
+                <p id="dllMessage" class="message"></p>
+                <div id="dllLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo (use no injector):</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="dllLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyDllLink" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="dllFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar DLL (Slot 2 — MatadorFX)</h2>
+                <p class="card-desc">Segunda DLL separada (MatadorFX). Link fixo próprio para usar no injector.</p>
+                <div class="dll-upload-row">
+                  <input type="file" id="dllMatadorfxFileInput" accept=".dll" class="dll-file-input">
+                  <button type="button" id="btnUploadDllMatadorfx">Enviar DLL MatadorFX</button>
+                </div>
+                <p id="dllMatadorfxMessage" class="message"></p>
+                <div id="dllMatadorfxLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo MatadorFX (use no injector):</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="dllMatadorfxLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyDllLinkMatadorfx" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="dllMatadorfxFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar DLL (Slot 3 — NextMenu)</h2>
+                <p class="card-desc">Terceira DLL separada (NextMenu). Link fixo próprio para usar no injector.</p>
+                <div class="dll-upload-row">
+                  <input type="file" id="dllNextmenuFileInput" accept=".dll" class="dll-file-input">
+                  <button type="button" id="btnUploadDllNextmenu">Enviar DLL NextMenu</button>
+                </div>
+                <p id="dllNextmenuMessage" class="message"></p>
+                <div id="dllNextmenuLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo NextMenu (use no injector):</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="dllNextmenuLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyDllLinkNextmenu" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="dllNextmenuFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar DLL (Slot 4 — FATALYPLAY)</h2>
+                <p class="card-desc">Quarta DLL separada (FATALYPLAY). Link fixo próprio para usar no injector.</p>
+                <div class="dll-upload-row">
+                  <input type="file" id="dllFatalyplayFileInput" accept=".dll" class="dll-file-input">
+                  <button type="button" id="btnUploadDllFatalyplay">Enviar DLL FATALYPLAY</button>
+                </div>
+                <p id="dllFatalyplayMessage" class="message"></p>
+                <div id="dllFatalyplayLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo FATALYPLAY (use no injector):</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="dllFatalyplayLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyDllLinkFatalyplay" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="dllFatalyplayFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar DLL (Slot 5 â€” Free Fire India)</h2>
+                <p class="card-desc">Quinta DLL separada (Free Fire India). Link fixo próprio para usar no injector.</p>
+                <div class="dll-upload-row">
+                  <input type="file" id="dllFreefireindiaFileInput" accept=".dll" class="dll-file-input">
+                  <button type="button" id="btnUploadDllFreefireindia">Enviar DLL Free Fire India</button>
+                </div>
+                <p id="dllFreefireindiaMessage" class="message"></p>
+                <div id="dllFreefireindiaLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo Free Fire India (use no injector):</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="dllFreefireindiaLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyDllLinkFreefireindia" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="dllFreefireindiaFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar DLL (Slot 6 â€” Free Fire Play)</h2>
+                <p class="card-desc">Sexta DLL separada (Free Fire Play). Link fixo próprio para usar no injector.</p>
+                <div class="dll-upload-row">
+                  <input type="file" id="dllFreefireplayFileInput" accept=".dll" class="dll-file-input">
+                  <button type="button" id="btnUploadDllFreefireplay">Enviar DLL Free Fire Play</button>
+                </div>
+                <p id="dllFreefireplayMessage" class="message"></p>
+                <div id="dllFreefireplayLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo Free Fire Play (use no injector):</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="dllFreefireplayLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyDllLinkFreefireplay" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="dllFreefireplayFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg></span> Versões Lua Executor (injector)</h2>
+                <p class="card-desc">Desligar aqui bloqueia download no site e o injector mostra <strong>off</strong> ao abrir (usa <code>GET /api/loader/product-flags</code>).</p>
+                <p class="card-desc">0 = Free Fire Play (v7a) · 1 = India · 2 = x86 / DLL principal (SilvaCheats)</p>
+                <div class="duration-row loader-flags-row">
+                  <label class="toggle-label"><input type="checkbox" id="loaderFlag0" disabled> Play / v7a <span class="flag-key">[0]</span></label>
+                  <label class="toggle-label"><input type="checkbox" id="loaderFlag1" disabled> India <span class="flag-key">[1]</span></label>
+                  <label class="toggle-label"><input type="checkbox" id="loaderFlag2" disabled> x86 / principal <span class="flag-key">[2]</span></label>
+                </div>
+                <p id="loaderProductFlagsMessage" class="message"></p>
+              </div>
+              <div class="card card-dll-slot">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span> Hospedar Lib Lince</h2>
+                <p class="card-desc">Envie sua lib .so para gerar um link fixo. O download sempre sai como liblincdev.so e a versão fica registrada no painel.</p>
+                <label class="duration-label" for="libLinceVersionInput">Versão da lib (ex: 1.2.3)</label>
+                <input type="text" id="libLinceVersionInput" placeholder="1.2.3" class="full-width">
+                <div class="dll-upload-row">
+                  <input type="file" id="libLinceFileInput" accept=".so" class="dll-file-input">
+                  <button type="button" id="btnUploadLibLince">Enviar Lib Lince</button>
+                </div>
+                <p id="libLinceMessage" class="message"></p>
+                <div id="libLinceLinkSection" class="dll-link-section hidden">
+                  <label class="duration-label">Link fixo Lib Lince:</label>
+                  <div class="dll-link-row">
+                    <input type="text" id="libLinceLinkUrl" readonly class="full-width dll-link-input">
+                    <button type="button" id="btnCopyLibLinceLink" class="btn-copy-link">Copiar</button>
+                  </div>
+                  <p id="libLinceFileInfo" class="dll-file-info"></p>
+                </div>
+              </div>
+            </div>
+
+            <div id="tabUsuarios" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M4 20a8 8 0 0 1 16 0"/></svg></span> Registrar novo login</h2>
+                <p class="card-desc">Crie usuários que podem acessar o painel. Use apenas letras, números, _ e - no nome. No MySQL, o cargo fica na coluna <code>role</code> da tabela <code>silva_users</code> (valores: <code>owner</code>/<code>dono</code>, <code>staff</code>/<code>admin</code>, <code>ajudante</code>/<code>suporte</code>).</p>
+                <div class="duration-row">
+                  <input type="text" id="newUserUsername" placeholder="Usuário" class="full-width">
+                  <input type="password" id="newUserPassword" placeholder="Senha" class="full-width">
+                </div>
+                <label class="duration-label" for="newUserRole">Cargo</label>
+                <select id="newUserRole" class="full-width">
+                  <option value="staff">Admin — keys, atividade, DLLs (sem só dono)</option>
+                  <option value="ajudante">Suporte — só aba Usuários Loader</option>
+                  <option value="owner">Dono — acesso total ao painel</option>
+                </select>
+                <div class="add-row">
+                  <button type="button" id="btnAddUser">Registrar</button>
+                </div>
+                <p id="usersMessage" class="message"></p>
+                <h3 class="users-list-title">Palavra-chave de segurança</h3>
+                <p class="card-desc">Depois de definir, o login exige esta palavra além da senha. Só quem a souber entra, mesmo com user e senha roubados.</p>
+                <div class="duration-row">
+                  <input type="password" id="adminPhraseNew" placeholder="Nova palavra-chave (mín. 4 caracteres)" class="full-width" autocomplete="new-password">
+                  <input type="password" id="adminPhraseConfirm" placeholder="Confirmar" class="full-width" autocomplete="new-password">
+                </div>
+                <div class="add-row">
+                  <button type="button" id="btnSaveAdminPhrase">Guardar palavra-chave</button>
+                  <button type="button" id="btnClearAdminPhrase" class="btn-secondary">Remover palavra-chave</button>
+                </div>
+                <h3 class="users-list-title">Logins com acesso ao painel</h3>
+                <div id="usersList" class="keys-list"></div>
+              </div>
+            </div>
+
+            <div id="tabRevendedores" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true">💠</span> Mercado Pago (PIX)</h2>
+                <p class="card-desc">Access Token e e-mail do pagador para as <strong>recargas PIX</strong> no painel <a href="/vendedor" target="_blank" rel="noopener noreferrer" class="link-inline">/vendedor</a>. O que guardar aqui tem prioridade sobre o ficheiro <strong>.env</strong> / variáveis do servidor.</p>
+                <div class="duration-row">
+                  <label class="duration-label" for="mpPanelPayerEmail">E-mail do pagador</label>
+                  <input type="email" id="mpPanelPayerEmail" class="full-width" placeholder="exemplo@email.com" autocomplete="off">
+                </div>
+                <div class="duration-row">
+                  <label class="duration-label" for="mpPanelAccessToken">Access Token (APP_USR-…)</label>
+                  <input type="password" id="mpPanelAccessToken" class="full-width" placeholder="Deixe em branco para manter o token já guardado" autocomplete="off">
+                </div>
+                <label class="duration-label" style="display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;"><input type="checkbox" id="mpPanelClearToken" style="margin-top:0.2rem"> Apagar token guardado no painel (passar a usar só variável de ambiente no servidor)</label>
+                <div class="add-row">
+                  <button type="button" id="btnSaveMpPanel">Guardar Mercado Pago</button>
+                </div>
+                <p id="mpPanelMessage" class="message"></p>
+                <p id="mpPanelStatus" class="card-desc mp-panel-status"></p>
+              </div>
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true">💬</span> Discord (webhooks)</h2>
+                <p class="card-desc">URLs dos <strong>Incoming Webhooks</strong> do Discord para notificações (keys geradas, keys apagadas, recarga PIX). O que guardar aqui tem prioridade sobre o <strong>.env</strong> / variáveis do servidor.</p>
+                <div id="discordWebhookSavedSummary" class="discord-webhook-saved hidden">
+                  <p id="discordWebhookPanelStatus" class="card-desc mp-panel-status"></p>
+                  <button type="button" id="btnEditDiscordWebhooks" class="btn-ghost">Editar webhooks</button>
+                </div>
+                <div id="discordWebhookEditArea">
+                  <div class="duration-row">
+                    <label class="duration-label" for="discordWebhookKeyGenerated">Keys geradas (admin + revendedor)</label>
+                    <input type="url" id="discordWebhookKeyGenerated" class="full-width" placeholder="https://discord.com/api/webhooks/..." autocomplete="off">
+                  </div>
+                  <div class="duration-row">
+                    <label class="duration-label" for="discordWebhookKeyDeleted">Keys apagadas</label>
+                    <input type="url" id="discordWebhookKeyDeleted" class="full-width" placeholder="https://discord.com/api/webhooks/..." autocomplete="off">
+                  </div>
+                  <div class="duration-row">
+                    <label class="duration-label" for="discordWebhookResellerPayment">Recarga PIX (revendedor)</label>
+                    <input type="url" id="discordWebhookResellerPayment" class="full-width" placeholder="https://discord.com/api/webhooks/..." autocomplete="off">
+                  </div>
+                  <div class="duration-row">
+                    <label class="duration-label" for="discordWebhookFallback">URL única (opcional)</label>
+                    <input type="url" id="discordWebhookFallback" class="full-width" placeholder="Usada só onde os campos acima estiverem vazios" autocomplete="off">
+                  </div>
+                  <div class="add-row">
+                    <button type="button" id="btnSaveDiscordPanel">Guardar Discord</button>
+                  </div>
+                </div>
+                <p id="discordPanelMessage" class="message"></p>
+              </div>
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Revendedores</h2>
+                <p class="card-desc">Crie logins exclusivos para revendedores. Eles recarregam saldo com <strong>PIX (Mercado Pago)</strong> no painel dedicado e geram keys de ativação com os preços definidos (1/7/15/30 dias). A <strong>palavra-chave de login</strong> (segundo passo no /vendedor) pode ser vista ou definida por si em cada linha — ou o revendedor guarda no perfil.</p>
+                <p class="card-desc"><a href="/vendedor" target="_blank" rel="noopener noreferrer" class="link-inline">Abrir painel do vendedor (/vendedor)</a> — envie este link para quem for revender.</p>
+                <div class="duration-row">
+                  <input type="text" id="newResellerUsername" placeholder="Usuário revendedor" class="full-width">
+                  <input type="password" id="newResellerPassword" placeholder="Senha" class="full-width">
+                </div>
+                <div class="duration-row">
+                  <label class="duration-label" for="newResellerBalance">Saldo inicial (R$, opcional)</label>
+                  <input type="number" id="newResellerBalance" placeholder="0" class="full-width" min="0" step="0.01">
+                </div>
+                <div class="add-row">
+                  <button type="button" id="btnAddReseller">Criar revendedor</button>
+                </div>
+                <p id="resellersMessage" class="message"></p>
+                <h3 class="users-list-title">Revendedores cadastrados</h3>
+                <div id="resellersList" class="keys-list"></div>
+              </div>
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true">🔑</span> Keys dos revendedores</h2>
+                <p class="card-desc">Códigos criados no painel <strong>/vendedor</strong>, quem resgatou (login loader ou ID) e ações. As mesmas entradas aparecem na aba <strong>Keys geradas</strong>.</p>
+                <div id="resellerGeneratedKeysList" class="keys-list"></div>
+              </div>
+            </div>
+
+            <div id="tabRenovacao" class="tab-pane">
+              <div class="card">
+                <h2><span class="card-icon" aria-hidden="true"><svg class="card-icon-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14-3.5L23 10"/><path d="M1 14l5.5 4.5A9 9 0 0 0 20.5 15"/></svg></span> Renova&#231;&#227;o de keys</h2>
+                <p class="card-desc">Renove uma key adicionando mais tempo.</p>
+                <div class="renew-row">
+                  <input type="text" id="renewKeyId" placeholder="Insira a key" class="full-width">
+                  <select id="renewKeyDays" class="renew-days-input">
+                    <option value="10">10 segundos</option>
+                    <option value="3600">1 hora</option>
+                    <option value="86400">1 dia</option>
+                    <option value="604800">7 dias</option>
+                    <option value="1296000">15 dias</option>
+                    <option value="2592000">30 dias</option>
+                    <option value="0">Permanente</option>
+                  </select>
+                  <button type="button" id="btnRenewKey" class="btn-verificar">Renovar</button>
+                </div>
+                <p id="renewKeyMessage" class="message"></p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <script src="app.obf.js"></script>
+</body>
+</html>
+
+
+
+
+
+

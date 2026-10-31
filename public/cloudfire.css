@@ -1,0 +1,161 @@
+/* Landing Cloud Fire — tema fogo / nuvem escura */
+:root {
+  --cf-bg: #0a0e14;
+  --cf-surface: #121a24;
+  --cf-accent: #ff6b2c;
+  --cf-accent2: #3d9cff;
+  --cf-text: #e8eef5;
+  --cf-muted: #8a9bb0;
+  --cf-radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.cf-landing {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--cf-bg);
+  color: var(--cf-text);
+  line-height: 1.5;
+}
+
+.cf-bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255, 107, 44, 0.22), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(61, 156, 255, 0.12), transparent),
+    radial-gradient(ellipse 50% 30% at 0% 80%, rgba(255, 107, 44, 0.1), transparent);
+}
+
+.cf-wrap {
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.cf-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.cf-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--cf-accent), #ff9a56);
+  font-size: 2rem;
+  box-shadow: 0 12px 40px rgba(255, 107, 44, 0.35);
+  margin-bottom: 1rem;
+}
+
+.cf-title {
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.cf-title span {
+  background: linear-gradient(90deg, var(--cf-accent), #ffb38a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cf-tagline {
+  margin: 0;
+  color: var(--cf-muted);
+  font-size: 1.05rem;
+}
+
+.cf-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .cf-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cf-card {
+  background: var(--cf-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--cf-radius);
+  padding: 1.5rem 1.35rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+a.cf-card:hover {
+  border-color: rgba(255, 107, 44, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.cf-card-admin {
+  border-left: 3px solid var(--cf-accent2);
+}
+
+.cf-card-vendedor {
+  border-left: 3px solid var(--cf-accent);
+}
+
+.cf-card h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.cf-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--cf-muted);
+  flex: 1;
+}
+
+.cf-card-cta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cf-accent);
+}
+
+.cf-card-admin .cf-card-cta {
+  color: var(--cf-accent2);
+}
+
+.cf-note {
+  margin-top: 2rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--cf-radius);
+  background: rgba(61, 156, 255, 0.08);
+  border: 1px solid rgba(61, 156, 255, 0.2);
+  font-size: 0.88rem;
+  color: var(--cf-muted);
+}
+
+.cf-note strong {
+  color: var(--cf-text);
+}
+
+.cf-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 0.8rem;
+  color: var(--cf-muted);
+}

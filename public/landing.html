@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Fire</title>
+  <link rel="stylesheet" href="/cloudfire.css">
+</head>
+<body class="cf-landing">
+  <div class="cf-bg-glow" aria-hidden="true"></div>
+  <div class="cf-wrap">
+    <header class="cf-header">
+      <div class="cf-logo" aria-hidden="true">☁</div>
+      <h1 class="cf-title">Bem-vindo ao <span>Cloud Fire</span></h1>
+      <p class="cf-tagline">Infraestrutura e painéis separados: cada função no seu próprio acesso.</p>
+    </header>
+
+    <div class="cf-grid">
+      <a class="cf-card cf-card-admin" href="/admin">
+        <h2>Painel administrativo</h2>
+        <p>Gestão de keys, contas loader, DLLs, usuários do painel e configurações. Login exclusivo para administradores.</p>
+        <span class="cf-card-cta">Abrir /admin →</span>
+      </a>
+      <a class="cf-card cf-card-vendedor" href="/vendedor">
+        <h2>Painel do vendedor</h2>
+        <p>Recarga PIX, saldo e geração de keys para revenda. Credenciais criadas pelo administrador.</p>
+        <span class="cf-card-cta">Abrir /vendedor →</span>
+      </a>
+    </div>
+
+    <p class="cf-note">
+      <strong>Segurança:</strong> o login de administrador e o de vendedor são verificados em rotas de API diferentes.
+      O loader do cliente continua usando <code style="color:#ffb38a">POST /api/login</code> com HWID quando aplicável.
+    </p>
+
+    <footer class="cf-footer">Cloud Fire · painéis em rotas dedicadas</footer>
+  </div>
+</body>
+</html>
